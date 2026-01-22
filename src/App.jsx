@@ -134,11 +134,25 @@ const CADPortfolio = () => {
   const filteredProjects = activeFilter === 'all' 
     ? projects 
     : projects.filter(p => p.category === activeFilter);
-
+    
   const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80; // Account for sticky navbar height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
     setIsMenuOpen(false);
   };
+  // const scrollToSection = (id) => {
+  //   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  //   setIsMenuOpen(false);
+  // };
 
   if (selectedProject) {
     const project = projects.find(p => p.id === selectedProject);
